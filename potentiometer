@@ -1,0 +1,16 @@
+int ledPin = 5;        // LED connected to digital pin 5
+int potPin = A0;       // Potentiometer connected to analog pin A0
+int potValue = 0;      // Variable to store the potentiometer reading
+int ledBrightness = 0; // Variable to store the LED brightness
+
+void setup() {
+  pinMode(ledPin, OUTPUT);   // Set the LED pin as output
+}
+
+void loop() {
+  potValue = analogRead(potPin);          // Read the potentiometer value (0 to 1023)
+  ledBrightness = map(potValue, 0, 1023, 0, 255); // Map pot value to LED brightness (0 to 255)
+
+  analogWrite(ledPin, ledBrightness);     // Set the LED brightness
+  delay(10);                              // Small delay to smooth changes
+}
