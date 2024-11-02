@@ -1,0 +1,16 @@
+int led = 6;
+int brightness = 0;
+int FadeAmount = 5;
+
+void setup() {
+  pinMode(led, OUTPUT);
+}
+void loop() {
+  analogWrite(led, brightness);
+  brightness = brightness + FadeAmount;
+  
+  if(brightness <= 0 || brightness >= 255) {
+    FadeAmount = -FadeAmount;
+}
+delay(30);
+}
