@@ -1,0 +1,23 @@
+// Define pin numbers
+const int tiltSwitchPin = 10; // Pin connected to tilt switch
+const int ledPin = 2;         // Pin connected to LED
+
+void setup() {
+  // Set up pin modes
+  pinMode(tiltSwitchPin, INPUT);   // Set tilt switch as input
+  pinMode(ledPin, OUTPUT);         // Set LED as output
+}
+
+void loop() {
+  // Read the state of the tilt switch
+  int tiltState = digitalRead(tiltSwitchPin);
+
+  // Check if the tilt switch is triggered (HIGH or LOW depending on your switch type)
+  if (tiltState == HIGH) {
+    digitalWrite(ledPin, HIGH); // Turn on LED
+  } else {
+    digitalWrite(ledPin, LOW);  // Turn off LED
+  }
+
+  delay(100); // Small delay for stability
+}
