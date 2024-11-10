@@ -1,0 +1,61 @@
+#include <dht.h>
+#include <LiquidCrystal.h>
+
+// Initialize DHT11 sensor object
+dht DHT;
+
+// Define DHT11 sensor pin
+#define DHT11_PIN 7
+
+// Initialize the LCD library with the interface pins
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+void setup() {
+    // Initialize the LCD and specify the dimensions (16x2 characters)
+    lcd.begin(16, 2);
+    
+    // Print initial message on LCD
+    lcd.print("Temp: Humidity:");
+
+    // Initialize serial communication for debugging
+    Serial.begin(9600);
+}
+
+void loop() {
+    // Read temperature and humidity
+    int result = DHT.read11(DHT11_PIN);
+    
+    // Check if the reading was successful
+    if (result == DHTLIB_OK) {
+        // Display on Serial Monitor
+        Serial.print("Temperature: ");
+        Serial.print(DHT.temperature, 1);  // 1 decimal place
+        Serial.print(" °C\tHumidity: ");
+        Serial.print(DHT.humidity, 1);     // 1 decimal place
+        Serial.println(" %");
+
+        // Clear LCD screen
+        lcd.clear();
+        
+        // Print temperature on the first row
+        lcd.setCursor(0, 0); // First column, first row
+        lcd.print("Temp: ");
+        lcd.print(DHT.temperature, 1);
+        lcd.print(" C");
+        
+        // Print humidity on the second row
+        lcd.setCursor(0, 1); // First column, second row
+        lcd.print("Humidity: ");
+        lcd.print(DHT.humidity, 1);
+        lcd.print(" %");
+    } else {
+        // Print error message on the serial monitor
+        Serial.print("Error: ");
+        if (result == DHTLIB_ERROR_CHECKSUM) Serial.println("Checksum error");
+        else if (result == DHTLIB_ERROR_TIMEOUT) Serial.println("Timeout error");
+        else Serial.println("Unknown error");
+    }
+
+    // Delay before reading again (1 second)
+    delay(1000);
+}
